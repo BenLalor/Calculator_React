@@ -7,7 +7,18 @@ function Calculator() {
   const [display, setDisplay] = useState("");
 
   const updateString = (newElement) => {
-    if (newElement === "clear") return setDisplay("");
+    if (
+      (newElement === "+" ||
+        newElement === "-" ||
+        newElement === "*" ||
+        newElement === "/") &&
+      (display.charAt(display.length - 1) === "+" ||
+        display.charAt(display.length - 1) === "-" ||
+        display.charAt(display.length - 1) === "*" ||
+        display.charAt(display.length - 1) === "/")
+    )
+      return setDisplay(display.slice(0, -1) + newElement);
+    else if (newElement === "clear") return setDisplay("");
     else if (newElement === "=") calculate();
     else {
       setDisplay(display + newElement);
@@ -16,7 +27,7 @@ function Calculator() {
 
   const calculate = () => {
     const result = evaluate(display);
-    setDisplay(result);
+    setDisplay(String(result));
   };
 
   return (
